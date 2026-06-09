@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="THE TIGER FITNESS - Elite Premium Gym. Strength is earned. Discipline is chosen. Greatness is built every single day.">
+<meta name="theme-color" content="#0a0a0a">
+<title>THE TIGER FITNESS | Unleash The Tiger Within</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --black: #050508;
+  --dark: #0d0d12;
+  --card: #111118;
+  --card2: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --orange: #ff6b1a;
+  --orange-light: #ff8c44;
+  --red: #e8192c;
+  --gold: #d4a830;
+  --white: #f0f0f5;
+  --muted: #6b6b7a;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-ui: 'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+
+/* ===== SCROLL PROGRESS ===== */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--orange), var(--red));
+  z-index: 9999; transition: width 0.1s linear;
+}
+
+/* ===== LOADER ===== */
+#loader {
+  position: fixed; inset: 0; background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; z-index: 10000;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+.loader-tiger {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--orange), var(--red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse-scale 1s ease-in-out infinite;
+}
+.loader-bar {
+  width: 200px; height: 2px; background: rgba(255,255,255,0.1);
+  margin-top: 24px; border-radius: 2px; overflow: hidden;
+}
+.loader-fill {
+  height: 100%; background: linear-gradient(90deg, var(--orange), var(--red));
+  width: 0%; animation: fill-bar 1.8s ease forwards;
+}
+.loader-text {
+  font-family: var(--font-ui); font-size: 0.85rem; letter-spacing: 0.3em;
+  color: var(--muted); margin-top: 12px; text-transform: uppercase;
+}
+@keyframes fill-bar { to { width: 100%; } }
+@keyframes pulse-scale { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 5%; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+nav.scrolled {
+  background: rgba(5,5,8,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem; letter-spacing: 0.08em;
+  background: linear-gradient(135deg, var(--orange), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-logo span { color: var(--white); -webkit-text-fill-color: var(--white); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  font-family: var(--font-ui); font-size: 0.95rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: rgba(240,240,245,0.7);
+  transition: color 0.2s ease; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+  background: var(--orange); transition: width 0.2s ease;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 8px 20px; background: var(--orange);
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+  border-radius: 4px; transition: background 0.2s ease !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--orange-light) !important; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; padding: 8px;
+}
+.hamburger span {
+  width: 24px; height: 2px; background: var(--white);
+  transition: all 0.3s ease; display: block;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: rgba(5,5,8,0.97); backdrop-filter: blur(20px);
+  padding: 2rem; flex-direction: column; gap: 1.5rem; z-index: 999;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--font-ui); font-size: 1.1rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--white);
+  padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+}
+
+/* ===== HERO ===== */
+#hero {
+  min-height: 100svh; display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; padding: 80px 5% 60px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,107,26,0.12) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 40% at 80% 70%, rgba(232,25,44,0.08) 0%, transparent 60%),
+              var(--black);
+}
+/* Particle canvas */
+#particles-canvas {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,107,26,0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,107,26,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+/* Tiger silhouette */
+.tiger-silhouette {
+  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+  width: min(45vw, 480px); opacity: 0.12; pointer-events: none;
+  filter: drop-shadow(0 0 60px var(--orange));
+  animation: tiger-breathe 4s ease-in-out infinite;
+}
+@keyframes tiger-breathe {
+  0%,100%{transform:translateY(-50%) scale(1)} 50%{transform:translateY(-52%) scale(1.02)}
+}
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+.hero-eyebrow {
+  font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 12px; opacity: 0;
+  animation: fade-up 0.8s ease 0.3s forwards;
+}
+.hero-eyebrow::before {
+  content: ''; width: 40px; height: 1px; background: var(--orange);
+}
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  line-height: 0.95; letter-spacing: 0.02em;
+  text-transform: uppercase; opacity: 0;
+  animation: fade-up 0.8s ease 0.5s forwards;
+}
+.hero-h1 .highlight {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--red) 60%, var(--gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1rem; color: rgba(240,240,245,0.6); max-width: 480px;
+  margin: 1.5rem 0 2.5rem; line-height: 1.7; opacity: 0;
+  animation: fade-up 0.8s ease 0.7s forwards;
+}
+.hero-btns {
+  display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0;
+  animation: fade-up 0.8s ease 0.9s forwards;
+}
+.btn-primary {
+  padding: 14px 32px; background: var(--orange);
+  color: #fff; font-family: var(--font-ui); font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; border-radius: 4px;
+  transition: all 0.25s ease; position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: translateX(-100%); transition: transform 0.4s ease;
+}
+.btn-primary:hover::before { transform: translateX(100%); }
+.btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,26,0.35); }
+.btn-outline {
+  padding: 14px 32px; border: 1px solid rgba(255,107,26,0.5);
+  color: var(--white); font-family: var(--font-ui); font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; border-radius: 4px;
+  transition: all 0.25s ease;
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; margin-top: 4rem; opacity: 0;
+  animation: fade-up 0.8s ease 1.1s forwards;
+  background: var(--border);
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.stat-item {
+  padding: 1.5rem 1rem; background: rgba(255,107,26,0.04);
+  text-align: center; transition: background 0.2s;
+}
+.stat-item:hover { background: rgba(255,107,26,0.1); }
+.stat-num {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem);
+  background: linear-gradient(135deg, var(--orange), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1;
+}
+.stat-label {
+  font-family: var(--font-ui); font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  margin-top: 4px;
+}
+@keyframes fade-up { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===== SECTION COMMON ===== */
+section { padding: 100px 5%; }
+.section-eye {
+  font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.4em; text-transform: uppercase; color: var(--orange);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;
+}
+.section-eye::before { content: ''; width: 30px; height: 1px; background: var(--orange); }
+.section-title {
+  font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem);
+  text-transform: uppercase; line-height: 1.05; letter-spacing: 0.02em;
+}
+.section-sub {
+  color: rgba(240,240,245,0.55); font-size: 0.95rem; max-width: 520px;
+  margin-top: 0.75rem; line-height: 1.7;
+}
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* ===== QUOTES TICKER ===== */
+#quotes { padding: 60px 0; background: var(--dark); overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ticker-wrap { display: flex; gap: 0; }
+.ticker-track {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+.ticker-item {
+  padding: 0 3rem; display: flex; align-items: center; gap: 1.5rem;
+  font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2rem);
+  text-transform: uppercase; letter-spacing: 0.05em; color: rgba(240,240,245,0.3);
+  transition: color 0.3s ease;
+}
+.ticker-item:hover { color: var(--white); }
+.ticker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ===== MEMBERSHIP ===== */
+.plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+.plan-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 2.5rem; position: relative; overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.plan-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.plan-card.recommended {
+  border-color: var(--orange); box-shadow: 0 0 40px rgba(255,107,26,0.2);
+}
+.plan-card.recommended::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,107,26,0.06), transparent);
+  pointer-events: none;
+}
+.plan-badge {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: var(--orange); color: #fff; font-family: var(--font-ui);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+}
+.plan-tier {
+  font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange);
+  margin-bottom: 0.5rem;
+}
+.plan-name {
+  font-family: var(--font-display); font-size: 2rem; text-transform: uppercase;
+  letter-spacing: 0.04em; line-height: 1;
+}
+.plan-price {
+  margin: 1.5rem 0; display: flex; align-items: baseline; gap: 4px;
+}
+.plan-currency { font-size: 1.2rem; color: var(--orange); font-weight: 600; align-self: flex-start; margin-top: 6px; }
+.plan-amount { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; }
+.plan-period { font-size: 0.85rem; color: var(--muted); }
+.plan-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.plan-features li {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: rgba(240,240,245,0.75);
+}
+.plan-features li::before {
+  content: '✦'; color: var(--orange); font-size: 0.65rem; flex-shrink: 0;
+}
+.plan-features li.off { color: var(--muted); }
+.plan-features li.off::before { color: var(--muted); content: '—'; }
+.plan-btn {
+  width: 100%; padding: 14px; margin-top: 2rem;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-ui); font-size: 0.95rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; border-radius: 6px;
+  transition: all 0.25s ease;
+}
+.plan-btn:hover { background: var(--orange); border-color: var(--orange); }
+.plan-card.recommended .plan-btn { background: var(--orange); border-color: var(--orange); }
+.plan-card.recommended .plan-btn:hover { background: var(--orange-light); }
+
+/* ===== CALCULATOR ===== */
+#calculator { background: var(--dark); }
+.calc-container { max-width: 800px; margin: 4rem auto 0; }
+.calc-tabs {
+  display: flex; gap: 0; border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.calc-tab {
+  flex: 1; padding: 12px 8px; background: transparent;
+  color: var(--muted); font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.2s ease;
+  border-right: 1px solid var(--border); min-width: 80px;
+}
+.calc-tab:last-child { border-right: none; }
+.calc-tab.active { background: var(--orange); color: #fff; }
+.calc-panel { display: none; }
+.calc-panel.active { display: block; }
+.calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.calc-field label {
+  display: block; font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 8px;
+}
+.calc-field input, .calc-field select {
+  width: 100%; padding: 12px 16px; background: var(--card); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-body); font-size: 0.95rem;
+  border-radius: 6px; transition: border-color 0.2s ease; outline: none;
+}
+.calc-field input:focus, .calc-field select:focus { border-color: var(--orange); }
+.calc-field select option { background: var(--card); }
+.calc-btn {
+  margin-top: 1.5rem; width: 100%; padding: 14px;
+  background: var(--orange); color: #fff;
+  font-family: var(--font-ui); font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; border-radius: 6px;
+  transition: background 0.2s ease;
+}
+.calc-btn:hover { background: var(--orange-light); }
+.calc-result {
+  margin-top: 1.5rem; padding: 1.5rem; background: var(--card);
+  border: 1px solid rgba(255,107,26,0.3); border-radius: 8px;
+  text-align: center; display: none;
+}
+.calc-result.show { display: block; animation: fade-up 0.4s ease; }
+.calc-result-num {
+  font-family: var(--font-display); font-size: 3.5rem;
+  background: linear-gradient(135deg, var(--orange), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.calc-result-label { font-family: var(--font-ui); font-size: 0.85rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+.calc-result-detail { font-size: 0.85rem; color: rgba(240,240,245,0.5); margin-top: 0.75rem; }
+
+/* ===== TRAINERS ===== */
+.trainers-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 4rem; }
+.trainer-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;
+  perspective: 1000px;
+}
+.trainer-card:hover { transform: translateY(-8px) rotateX(2deg); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.trainer-img {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
+  background: var(--card2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 5rem;
+  color: rgba(255,107,26,0.2);
+}
+.trainer-body { padding: 1.5rem; }
+.trainer-name { font-family: var(--font-display); font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.trainer-role { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 600; color: var(--orange); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 2px; }
+.trainer-stats { display: flex; gap: 1rem; margin-top: 1rem; }
+.t-stat { text-align: center; }
+.t-stat-num { font-family: var(--font-display); font-size: 1.4rem; color: var(--gold); }
+.t-stat-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.trainer-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+.trainer-tag {
+  padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px;
+  font-size: 0.72rem; color: var(--muted); font-family: var(--font-ui); font-weight: 600; letter-spacing: 0.08em;
+}
+
+/* ===== PROGRAMS ===== */
+#programs { background: var(--dark); }
+.programs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+.program-card {
+  position: relative; border-radius: 12px; overflow: hidden;
+  aspect-ratio: 4/5; cursor: pointer;
+  border: 1px solid var(--border); background: var(--card);
+  transition: transform 0.3s ease;
+}
+.program-card:hover { transform: scale(1.02); }
+.program-card:hover .program-overlay { opacity: 1; }
+.program-icon {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-60%);
+  font-size: 4rem; opacity: 0.15; transition: all 0.3s ease;
+}
+.program-card:hover .program-icon { transform: translate(-50%,-60%) scale(1.2); opacity: 0.25; }
+.program-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(255,107,26,0.3), transparent);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.program-body {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;
+  background: linear-gradient(to top, rgba(5,5,8,0.95) 60%, transparent);
+}
+.program-cat {
+  font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px;
+}
+.program-name { font-family: var(--font-display); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.program-desc { font-size: 0.8rem; color: rgba(240,240,245,0.55); margin-top: 4px; }
+
+/* ===== DASHBOARD ===== */
+.dashboard {
+  margin-top: 4rem; background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+.dashboard-header {
+  padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
+  background: var(--card2); border-bottom: 1px solid var(--border);
+}
+.dashboard-title { font-family: var(--font-ui); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.dash-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 8px var(--orange); animation: blink 1.5s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.dashboard-body { padding: 1.5rem; }
+.dash-kpis { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.dash-kpi {
+  background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem;
+  transition: border-color 0.2s ease;
+}
+.dash-kpi:hover { border-color: rgba(255,107,26,0.3); }
+.kpi-label { font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.kpi-value { font-family: var(--font-display); font-size: 2rem; margin-top: 4px; }
+.kpi-change { font-size: 0.75rem; color: #2ecc71; margin-top: 2px; }
+.dash-chart-area {
+  background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;
+}
+.chart-title { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+.chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+.chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.chart-bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 1s ease; }
+.chart-day { font-size: 0.65rem; color: var(--muted); font-family: var(--font-ui); font-weight: 600; }
+
+/* ===== TESTIMONIALS ===== */
+#testimonials { background: var(--dark); }
+.testimonials-track { margin-top: 4rem; overflow: hidden; }
+.testimonials-inner {
+  display: flex; gap: 1.5rem;
+  animation: scroll-testi 35s linear infinite;
+  width: max-content;
+}
+.testimonials-inner:hover { animation-play-state: paused; }
+.testi-card {
+  width: 320px; flex-shrink: 0; background: var(--card);
+  border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;
+  transition: border-color 0.2s ease;
+}
+.testi-card:hover { border-color: rgba(255,107,26,0.3); }
+.testi-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+.testi-star { color: var(--gold); font-size: 0.85rem; }
+.testi-text { font-size: 0.9rem; color: rgba(240,240,245,0.7); line-height: 1.7; }
+.testi-author { display: flex; align-items: center; gap: 12px; margin-top: 1.25rem; }
+.testi-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--red));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.1rem; flex-shrink: 0;
+}
+.testi-name { font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; }
+.testi-tag { font-size: 0.72rem; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; }
+@keyframes scroll-testi { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ===== FACILITIES ===== */
+.facilities-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+.facility-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 2rem; position: relative; overflow: hidden;
+  transition: all 0.3s ease; cursor: pointer;
+}
+.facility-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,107,26,0.08), transparent);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.facility-card:hover::before { opacity: 1; }
+.facility-card:hover { transform: translateY(-6px); border-color: rgba(255,107,26,0.3); }
+.facility-icon { font-size: 2.5rem; margin-bottom: 1.25rem; }
+.facility-name { font-family: var(--font-display); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.facility-desc { font-size: 0.85rem; color: rgba(240,240,245,0.55); margin-top: 0.5rem; line-height: 1.6; }
+.facility-tag { font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+
+/* ===== TRANSFORMATION ===== */
+#transformation { background: var(--dark); }
+.transform-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+.transform-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: transform 0.3s ease;
+}
+.transform-card:hover { transform: translateY(-6px); }
+.transform-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; }
+.transform-img {
+  aspect-ratio: 3/4; background: var(--card2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+}
+.transform-img.before { border-right: 2px solid var(--orange); }
+.transform-img-label {
+  position: absolute; font-family: var(--font-ui); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 8px;
+  background: rgba(5,5,8,0.8); border-radius: 3px;
+}
+.transform-img-label.b { top: 8px; left: 8px; color: var(--muted); }
+.transform-img-label.a { top: 8px; right: 8px; color: var(--orange); }
+.transform-body { padding: 1.25rem; }
+.transform-name { font-family: var(--font-ui); font-size: 0.95rem; font-weight: 700; }
+.transform-goal { font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-top: 2px; }
+.transform-stat { font-size: 0.8rem; color: rgba(240,240,245,0.55); margin-top: 6px; }
+
+/* ===== BLOG ===== */
+.blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
+.blog-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: all 0.3s ease;
+}
+.blog-card:hover { transform: translateY(-6px); border-color: rgba(255,107,26,0.2); }
+.blog-thumb {
+  aspect-ratio: 16/9; background: var(--card2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; position: relative; overflow: hidden;
+}
+.blog-thumb::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent, rgba(5,5,8,0.4));
+}
+.blog-body { padding: 1.25rem; }
+.blog-cat {
+  font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px;
+}
+.blog-title { font-family: var(--font-ui); font-size: 1rem; font-weight: 700; line-height: 1.4; }
+.blog-excerpt { font-size: 0.8rem; color: rgba(240,240,245,0.5); margin-top: 6px; line-height: 1.6; }
+.blog-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); }
+
+/* ===== APP PROMO ===== */
+#app { background: var(--dark); }
+.app-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 4rem;
+}
+.app-features { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+.app-feature { display: flex; align-items: flex-start; gap: 1rem; }
+.app-feature-icon {
+  width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(255,107,26,0.12); border: 1px solid rgba(255,107,26,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.app-feature-name { font-family: var(--font-ui); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; }
+.app-feature-desc { font-size: 0.8rem; color: rgba(240,240,245,0.5); margin-top: 2px; }
+.app-mockup {
+  background: var(--card); border: 1px solid var(--border); border-radius: 32px;
+  padding: 2rem; display: flex; flex-direction: column; align-items: center;
+  gap: 1rem; max-width: 280px; margin: 0 auto; position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.app-mockup-notch {
+  width: 60px; height: 4px; background: var(--border); border-radius: 2px;
+}
+.app-screen {
+  width: 100%; background: var(--card2); border-radius: 16px; padding: 1rem;
+  border: 1px solid var(--border);
+}
+.app-screen-stat { font-family: var(--font-display); font-size: 2.5rem; text-align: center; }
+.app-screen-label { font-family: var(--font-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 2px; }
+
+/* ===== CONTACT ===== */
+.contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 4rem; }
+.contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+.contact-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba(255,107,26,0.1); border: 1px solid rgba(255,107,26,0.2);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.contact-item-label { font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.contact-item-val { font-size: 0.95rem; margin-top: 2px; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 12px 16px; background: var(--card);
+  border: 1px solid var(--border); color: var(--white);
+  font-family: var(--font-body); font-size: 0.95rem; border-radius: 6px;
+  transition: border-color 0.2s ease; outline: none; resize: none;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: var(--orange); }
+
+/* ===== DEVELOPER ===== */
+#developer {
+  background: #010810;
+  border-top: 1px solid rgba(0,120,255,0.2);
+  border-bottom: 1px solid rgba(0,120,255,0.2);
+  position: relative; overflow: hidden;
+}
+.dev-grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(0,120,255,0.06) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,120,255,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.dev-glow {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 600px; height: 400px; pointer-events: none;
+  background: radial-gradient(ellipse, rgba(0,80,200,0.15), transparent 70%);
+}
+.dev-content { position: relative; z-index: 2; }
+.dev-init {
+  font-family: 'Courier New', monospace; font-size: 0.85rem;
+  color: rgba(0,180,255,0.6); letter-spacing: 0.15em; margin-bottom: 1rem;
+}
+.dev-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #00aaff, #0055cc, #0099dd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dev-subtitle {
+  font-family: 'Courier New', monospace; font-size: 0.8rem;
+  color: rgba(0,180,255,0.4); letter-spacing: 0.2em; margin-top: 4px;
+}
+.dev-body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+.holo-card {
+  background: rgba(0,20,60,0.6); border: 1px solid rgba(0,120,255,0.2);
+  border-radius: 12px; padding: 2rem; position: relative; overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+.holo-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,120,255,0.05), transparent);
+  pointer-events: none;
+}
+.holo-scan {
+  position: absolute; top: -100%; left: 0; right: 0; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(0,150,255,0.06), transparent);
+  animation: scan 4s linear infinite;
+}
+@keyframes scan { from{top:-100%} to{top:200%} }
+.dev-name {
+  font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 0.06em;
+  background: linear-gradient(135deg, #00ccff, #0080ff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dev-role { font-family: 'Courier New', monospace; font-size: 0.8rem; color: rgba(0,180,255,0.6); margin-top: 4px; letter-spacing: 0.1em; }
+.dev-org { display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; padding: 6px 14px; background: rgba(0,120,255,0.1); border: 1px solid rgba(0,120,255,0.3); border-radius: 20px; }
+.dev-org-label { font-family: 'Courier New', monospace; font-size: 0.75rem; color: rgba(0,180,255,0.7); letter-spacing: 0.1em; }
+.dev-about { font-size: 0.9rem; color: rgba(180,210,255,0.7); line-height: 1.7; margin-top: 1.25rem; font-style: italic; }
+.dev-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+.dev-stat-item { text-align: center; padding: 1rem; background: rgba(0,80,180,0.15); border: 1px solid rgba(0,120,255,0.15); border-radius: 8px; }
+.dev-stat-n { font-family: var(--font-display); font-size: 1.8rem; color: #00aaff; }
+.dev-stat-l { font-family: 'Courier New', monospace; font-size: 0.65rem; color: rgba(0,150,255,0.5); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 2px; }
+.dev-skills-title { font-family: 'Courier New', monospace; font-size: 0.75rem; color: rgba(0,150,255,0.5); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+.dev-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+.dev-skill {
+  padding: 5px 12px; background: rgba(0,80,180,0.2); border: 1px solid rgba(0,120,255,0.25);
+  border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.78rem;
+  color: rgba(100,180,255,0.8); transition: all 0.2s ease; letter-spacing: 0.05em;
+}
+.dev-skill:hover { background: rgba(0,100,220,0.3); border-color: rgba(0,150,255,0.4); color: #00ccff; }
+.dev-links { display: flex; flex-direction: column; gap: 10px; margin-top: 1.5rem; }
+.dev-link {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: rgba(0,50,150,0.2); border: 1px solid rgba(0,100,200,0.25);
+  border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.8rem;
+  color: rgba(100,180,255,0.8); transition: all 0.2s ease; letter-spacing: 0.05em;
+}
+.dev-link:hover { background: rgba(0,80,200,0.3); border-color: rgba(0,150,255,0.4); color: #00ccff; }
+.dev-link-icon { font-size: 1rem; }
+.dev-loaded {
+  font-family: 'Courier New', monospace; font-size: 0.8rem;
+  color: rgba(0,200,100,0.6); letter-spacing: 0.15em; margin-top: 2rem;
+  text-align: center;
+}
+.cursor-blink { animation: cursor 1s step-end infinite; }
+@keyframes cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--dark); border-top: 1px solid var(--border);
+  padding: 60px 5% 30px;
+}
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand-name {
+  font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.08em;
+  background: linear-gradient(135deg, var(--orange), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.footer-tagline { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.footer-desc { font-size: 0.85rem; color: rgba(240,240,245,0.4); line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+.footer-socials { display: flex; gap: 10px; margin-top: 1.25rem; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 8px; background: var(--card);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.2s ease;
+}
+.social-btn:hover { border-color: var(--orange); background: rgba(255,107,26,0.1); }
+.footer-col-title { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links li a { font-size: 0.85rem; color: rgba(240,240,245,0.5); transition: color 0.2s ease; }
+.footer-links li a:hover { color: var(--orange); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); flex-wrap: wrap; gap: 0.5rem; }
+.newsletter-form { display: flex; gap: 8px; margin-top: 1rem; }
+.newsletter-input {
+  flex: 1; padding: 10px 14px; background: var(--card); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-body); font-size: 0.85rem; border-radius: 6px; outline: none;
+  transition: border-color 0.2s ease;
+}
+.newsletter-input:focus { border-color: var(--orange); }
+.newsletter-btn {
+  padding: 10px 16px; background: var(--orange); color: #fff;
+  font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; border-radius: 6px;
+  transition: background 0.2s ease; white-space: nowrap;
+}
+.newsletter-btn:hover { background: var(--orange-light); }
+
+/* ===== CHATBOT ===== */
+#chat-toggle {
+  position: fixed; bottom: 28px; right: 28px; z-index: 5000;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--red));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; box-shadow: 0 4px 20px rgba(255,107,26,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#chat-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 30px rgba(255,107,26,0.5); }
+#chat-bubble {
+  position: fixed; bottom: 96px; right: 28px; z-index: 5000;
+  width: 340px; max-width: calc(100vw - 56px);
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; display: none; flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+#chat-bubble.open { display: flex; animation: fade-up 0.3s ease; }
+.chat-header {
+  padding: 1rem 1.25rem; background: linear-gradient(135deg, var(--orange), var(--red));
+  display: flex; align-items: center; gap: 10px;
+}
+.chat-header-icon { font-size: 1.3rem; }
+.chat-header-name { font-family: var(--font-ui); font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; }
+.chat-header-status { font-size: 0.7rem; opacity: 0.8; }
+.chat-messages {
+  flex: 1; padding: 1rem; overflow-y: auto; max-height: 300px;
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+.chat-messages::-webkit-scrollbar { width: 3px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); }
+.msg { max-width: 85%; padding: 8px 12px; border-radius: 12px; font-size: 0.85rem; line-height: 1.5; }
+.msg.bot { background: var(--card2); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
+.msg.user { background: var(--orange); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-quickbtns { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 1rem 0.5rem; }
+.qbtn {
+  padding: 4px 10px; border: 1px solid var(--border); border-radius: 20px;
+  font-size: 0.72rem; color: rgba(240,240,245,0.6); font-family: var(--font-ui); font-weight: 600;
+  transition: all 0.2s ease;
+}
+.qbtn:hover { border-color: var(--orange); color: var(--orange); }
+.chat-input-area { display: flex; gap: 8px; padding: 0.75rem 1rem; border-top: 1px solid var(--border); }
+.chat-input {
+  flex: 1; padding: 8px 12px; background: var(--card2); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-body); font-size: 0.85rem;
+  border-radius: 20px; outline: none; transition: border-color 0.2s ease;
+}
+.chat-input:focus { border-color: var(--orange); }
+.chat-send {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 0.9rem; transition: background 0.2s ease;
+}
+.chat-send:hover { background: var(--orange-light); }
+
+/* ===== STICKY BUTTONS ===== */
+.sticky-side {
+  position: fixed; right: 0; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 2px; z-index: 900;
+}
+.sticky-btn {
+  padding: 10px 12px; background: var(--card); border: 1px solid var(--border); border-right: none;
+  font-size: 1.1rem; writing-mode: vertical-rl; color: rgba(240,240,245,0.4);
+  transition: all 0.2s ease; border-radius: 8px 0 0 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sticky-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .plans-grid, .trainers-grid, .programs-grid, .facilities-grid, .transform-grid, .blog-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .dev-body { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+  .dash-kpis { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 70px 5%; }
+  .plans-grid, .trainers-grid, .programs-grid, .facilities-grid, .transform-grid, .blog-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .calc-fields { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .app-inner { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+  .dash-kpis { grid-template-columns: repeat(2,1fr); }
+  .tiger-silhouette { opacity: 0.05; }
+  .dev-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+  .dash-kpis { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .calc-tabs { flex-wrap: nowrap; overflow-x: auto; }
+  .calc-tab { flex-shrink: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-tiger">TIGER</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text">Initializing Power Systems...</div>
+</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">THE <span>TIGER</span></a>
+  <div class="nav-links">
+    <a href="#programs">Programs</a>
+    <a href="#membership">Membership</a>
+    <a href="#trainers">Trainers</a>
+    <a href="#facilities">Facilities</a>
+    <a href="#calculator">Tools</a>
+    <a href="#contact" class="nav-cta">Join Now</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#programs" onclick="closeMobileMenu()">Programs</a>
+  <a href="#membership" onclick="closeMobileMenu()">Membership</a>
+  <a href="#trainers" onclick="closeMobileMenu()">Trainers</a>
+  <a href="#facilities" onclick="closeMobileMenu()">Facilities</a>
+  <a href="#calculator" onclick="closeMobileMenu()">Tools</a>
+  <a href="#contact" onclick="closeMobileMenu()">Join Now</a>
+</div>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <svg class="tiger-silhouette" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+    <path fill="white" d="M200 20 C160 20, 120 40, 100 70 C80 100, 75 120, 80 140 C60 145, 50 160, 55 175 C40 180, 35 200, 45 215 C50 235, 70 245, 90 240 C95 260, 115 275, 140 270 C155 290, 185 295, 200 290 C215 295, 245 290, 260 270 C285 275, 305 260, 310 240 C330 245, 350 235, 355 215 C365 200, 360 180, 345 175 C355 160, 345 145, 325 140 C330 120, 325 100, 305 70 C280 40, 240 20, 200 20 Z M150 110 C145 105, 140 108, 142 115 C144 122, 155 125, 158 118 C161 111, 156 107, 150 110 Z M250 110 C244 107, 239 111, 242 118 C245 125, 256 122, 258 115 C260 108, 255 105, 250 110 Z M185 155 C180 150, 175 155, 178 162 C181 169, 195 170, 200 165 C205 170, 219 169, 222 162 C225 155, 220 150, 215 155 C210 148, 205 148, 200 150 C195 148, 190 148, 185 155 Z"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Elite Performance Center</div>
+    <h1 class="hero-h1">UNLEASH<br>THE <span class="highlight">TIGER</span><br>WITHIN</h1>
+    <p class="hero-sub">Strength is earned. Discipline is chosen. Greatness is built every single day.</p>
+    <div class="hero-btns">
+      <a href="#membership" class="btn-primary">Join The Pride</a>
+      <a href="#contact" class="btn-outline">Book Free Trial</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num" data-target="5000" data-suffix="+">0</div>
+      <div class="stat-label">Transformations</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="12" data-suffix="+">0</div>
+      <div class="stat-label">Expert Coaches</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-suffix="/7">24</div>
+      <div class="stat-label">Access</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="98" data-suffix="%">0</div>
+      <div class="stat-label">Success Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- Quotes Ticker -->
+<div id="quotes">
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item"><span class="ticker-dot"></span>Your body can stand almost anything. It's your mind you have to convince.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>No Excuses. No Limits. No Mercy.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Every Rep Is A Step Toward Greatness.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Pain Is Temporary. Pride Is Forever.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>When Others Quit, Tigers Rise.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Your body can stand almost anything. It's your mind you have to convince.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>No Excuses. No Limits. No Mercy.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Every Rep Is A Step Toward Greatness.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Pain Is Temporary. Pride Is Forever.</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>When Others Quit, Tigers Rise.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Membership -->
+<section id="membership">
+  <div class="section-eye reveal">Unlock Your Potential</div>
+  <h2 class="section-title reveal">CHOOSE YOUR <span style="color:var(--orange)">PLAN</span></h2>
+  <p class="section-sub reveal">Every journey starts with a decision. Pick the plan that matches your ambition.</p>
+  <div class="plans-grid">
+    <div class="plan-card reveal">
+      <div class="plan-tier">Starter</div>
+      <div class="plan-name">Warrior</div>
+      <div class="plan-price">
+        <span class="plan-currency">₹</span>
+        <span class="plan-amount">1,499</span>
+        <span class="plan-period">/month</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Full Gym Access</li>
+        <li>Locker Facility</li>
+        <li>Group Classes (2/week)</li>
+        <li>Basic Nutrition Guide</li>
+        <li class="off">Personal Training</li>
+        <li class="off">AI Fitness Tracking</li>
+        <li class="off">Body Analysis</li>
+        <li class="off">Community Events</li>
+      </ul>
+      <button class="plan-btn">Get Started</button>
+    </div>
+    <div class="plan-card recommended reveal" style="transition-delay:0.15s">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-tier">Advanced</div>
+      <div class="plan-name">Alpha</div>
+      <div class="plan-price">
+        <span class="plan-currency">₹</span>
+        <span class="plan-amount">2,999</span>
+        <span class="plan-period">/month</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Full Gym Access</li>
+        <li>Locker Facility</li>
+        <li>Unlimited Group Classes</li>
+        <li>Nutrition Guidance</li>
+        <li>Personal Training (4/month)</li>
+        <li>AI Fitness Tracking</li>
+        <li>Body Analysis</li>
+        <li class="off">Community Events</li>
+      </ul>
+      <button class="plan-btn">Join Alpha</button>
+    </div>
+    <div class="plan-card reveal" style="transition-delay:0.3s">
+      <div class="plan-tier">Elite</div>
+      <div class="plan-name">Beast Mode</div>
+      <div class="plan-price">
+        <span class="plan-currency">₹</span>
+        <span class="plan-amount">4,999</span>
+        <span class="plan-period">/month</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Full Gym Access</li>
+        <li>Premium Locker</li>
+        <li>Unlimited Group Classes</li>
+        <li>Custom Nutrition Plan</li>
+        <li>Personal Training (Unlimited)</li>
+        <li>AI Fitness Tracking</li>
+        <li>Advanced Body Analysis</li>
+        <li>Priority Community Events</li>
+      </ul>
+      <button class="plan-btn">Go Beast Mode</button>
+    </div>
+  </div>
+</section>
+
+<!-- Calculator -->
+<section id="calculator">
+  <div class="section-eye reveal">Smart Fitness Tools</div>
+  <h2 class="section-title reveal">AI FITNESS <span style="color:var(--orange)">CALCULATOR</span></h2>
+  <p class="section-sub reveal">Precision tools to map your transformation journey.</p>
+  <div class="calc-container reveal">
+    <div class="calc-tabs">
+      <button class="calc-tab active" onclick="switchTab('bmi')">BMI</button>
+      <button class="calc-tab" onclick="switchTab('bodyfat')">Body Fat</button>
+      <button class="calc-tab" onclick="switchTab('calories')">Calories</button>
+      <button class="calc-tab" onclick="switchTab('protein')">Protein</button>
+      <button class="calc-tab" onclick="switchTab('water')">Water</button>
+    </div>
+    <!-- BMI -->
+    <div class="calc-panel active" id="panel-bmi">
+      <div class="calc-fields">
+        <div class="calc-field"><label>Weight (kg)</label><input type="number" id="bmi-weight" placeholder="70" min="20" max="300"></div>
+        <div class="calc-field"><label>Height (cm)</label><input type="number" id="bmi-height" placeholder="175" min="100" max="250"></div>
+      </div>
+      <button class="calc-btn" onclick="calcBMI()">Calculate BMI</button>
+      <div class="calc-result" id="bmi-result">
+        <div class="calc-result-num" id="bmi-val">—</div>
+        <div class="calc-result-label" id="bmi-cat">—</div>
+        <div class="calc-result-detail" id="bmi-detail">—</div>
+      </div>
+    </div>
+    <!-- Body Fat -->
+    <div class="calc-panel" id="panel-bodyfat">
+      <div class="calc-fields">
+        <div class="calc-field"><label>Gender</label>
+          <select id="bf-gender"><option value="m">Male</option><option value="f">Female</option></select>
+        </div>
+        <div class="calc-field"><label>Age (years)</label><input type="number" id="bf-age" placeholder="25" min="15" max="80"></div>
+        <div class="calc-field"><label>BMI</label><input type="number" id="bf-bmi" placeholder="22.5" step="0.1"></div>
+      </div>
+      <button class="calc-btn" onclick="calcBodyFat()">Estimate Body Fat</button>
+      <div class="calc-result" id="bf-result">
+        <div class="calc-result-num" id="bf-val">—</div>
+        <div class="calc-result-label">Body Fat Percentage</div>
+        <div class="calc-result-detail" id="bf-detail">—</div>
+      </div>
+    </div>
+    <!-- Calories -->
+    <div class="calc-panel" id="panel-calories">
+      <div class="calc-fields">
+        <div class="calc-field"><label>Gender</label>
+          <select id="cal-gender"><option value="m">Male</option><option value="f">Female</option></select>
+        </div>
+        <div class="calc-field"><label>Age</label><input type="number" id="cal-age" placeholder="25" min="15" max="80"></div>
+        <div class="calc-field"><label>Weight (kg)</label><input type="number" id="cal-weight" placeholder="70"></div>
+        <div class="calc-field"><label>Height (cm)</label><input type="number" id="cal-height" placeholder="175"></div>
+        <div class="calc-field" style="grid-column:span 2"><label>Activity Level</label>
+          <select id="cal-activity">
+            <option value="1.2">Sedentary (desk job)</option>
+            <option value="1.375">Lightly Active (1-3 days/week)</option>
+            <option value="1.55" selected>Moderately Active (3-5 days)</option>
+            <option value="1.725">Very Active (6-7 days)</option>
+            <option value="1.9">Extremely Active (athlete)</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcCalories()">Calculate Calories</button>
+      <div class="calc-result" id="cal-result">
+        <div class="calc-result-num" id="cal-val">—</div>
+        <div class="calc-result-label">Daily Calories (TDEE)</div>
+        <div class="calc-result-detail" id="cal-detail">—</div>
+      </div>
+    </div>
+    <!-- Protein -->
+    <div class="calc-panel" id="panel-protein">
+      <div class="calc-fields">
+        <div class="calc-field"><label>Weight (kg)</label><input type="number" id="pro-weight" placeholder="70"></div>
+        <div class="calc-field"><label>Goal</label>
+          <select id="pro-goal">
+            <option value="1.6">Maintenance</option>
+            <option value="2.0" selected>Muscle Gain</option>
+            <option value="2.4">Elite Athlete</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcProtein()">Calculate Protein</button>
+      <div class="calc-result" id="pro-result">
+        <div class="calc-result-num" id="pro-val">—</div>
+        <div class="calc-result-label">Grams of Protein / Day</div>
+        <div class="calc-result-detail" id="pro-detail">—</div>
+      </div>
+    </div>
+    <!-- Water -->
+    <div class="calc-panel" id="panel-water">
+      <div class="calc-fields">
+        <div class="calc-field"><label>Weight (kg)</label><input type="number" id="wat-weight" placeholder="70"></div>
+        <div class="calc-field"><label>Activity Level</label>
+          <select id="wat-activity">
+            <option value="0">Low</option>
+            <option value="0.5" selected>Moderate</option>
+            <option value="1">High</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcWater()">Calculate Water</button>
+      <div class="calc-result" id="wat-result">
+        <div class="calc-result-num" id="wat-val">—</div>
+        <div class="calc-result-label">Litres of Water / Day</div>
+        <div class="calc-result-detail" id="wat-detail">—</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trainers -->
+<section id="trainers">
+  <div class="section-eye reveal">The Pride Leaders</div>
+  <h2 class="section-title reveal">MEET YOUR <span style="color:var(--orange)">COACHES</span></h2>
+  <p class="section-sub reveal">Battle-tested experts who've walked the path and know how to lead you through it.</p>
+  <div class="trainers-grid">
+    <div class="trainer-card reveal">
+      <div class="trainer-img">🦁</div>
+      <div class="trainer-body">
+        <div class="trainer-name">Arjun Singh</div>
+        <div class="trainer-role">Strength & Conditioning</div>
+        <div class="trainer-stats">
+          <div class="t-stat"><div class="t-stat-num">8+</div><div class="t-stat-label">Years</div></div>
+          <div class="t-stat"><div class="t-stat-num">420+</div><div class="t-stat-label">Clients</div></div>
+          <div class="t-stat"><div class="t-stat-num">3x</div><div class="t-stat-label">Champion</div></div>
+        </div>
+        <div class="trainer-tags">
+          <span class="trainer-tag">CSCS Certified</span>
+          <span class="trainer-tag">Powerlifting</span>
+          <span class="trainer-tag">Hypertrophy</span>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal" style="transition-delay:0.15s">
+      <div class="trainer-img">🐯</div>
+      <div class="trainer-body">
+        <div class="trainer-name">Priya Sharma</div>
+        <div class="trainer-role">Fat Loss & Functional</div>
+        <div class="trainer-stats">
+          <div class="t-stat"><div class="t-stat-num">6+</div><div class="t-stat-label">Years</div></div>
+          <div class="t-stat"><div class="t-stat-num">380+</div><div class="t-stat-label">Clients</div></div>
+          <div class="t-stat"><div class="t-stat-num">5★</div><div class="t-stat-label">Rated</div></div>
+        </div>
+        <div class="trainer-tags">
+          <span class="trainer-tag">ACE Certified</span>
+          <span class="trainer-tag">HIIT Expert</span>
+          <span class="trainer-tag">Nutrition</span>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card reveal" style="transition-delay:0.3s">
+      <div class="trainer-img">⚡</div>
+      <div class="trainer-body">
+        <div class="trainer-name">Rahul Verma</div>
+        <div class="trainer-role">Athletic Performance</div>
+        <div class="trainer-stats">
+          <div class="t-stat"><div class="t-stat-num">10+</div><div class="t-stat-label">Years</div></div>
+          <div class="t-stat"><div class="t-stat-num">600+</div><div class="t-stat-label">Clients</div></div>
+          <div class="t-stat"><div class="t-stat-num">Ex-Pro</div><div class="t-stat-label">Athlete</div></div>
+        </div>
+        <div class="trainer-tags">
+          <span class="trainer-tag">NASM CPT</span>
+          <span class="trainer-tag">CrossFit L2</span>
+          <span class="trainer-tag">Sports Science</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programs -->
+<section id="programs">
+  <div class="section-eye reveal">Engineered Results</div>
+  <h2 class="section-title reveal">TRAINING <span style="color:var(--orange)">PROGRAMS</span></h2>
+  <p class="section-sub reveal">Science-backed programs designed for real transformations.</p>
+  <div class="programs-grid">
+    <div class="program-card reveal"><div class="program-icon">🔥</div><div class="program-overlay"></div><div class="program-body"><div class="program-cat">Fat Loss</div><div class="program-name">Inferno Cut</div><div class="program-desc">High-intensity metabolic conditioning to shred fat fast.</div></div></div>
+    <div class="program-card reveal" style="transition-delay:0.1s"><div class="program-icon">💪</div><div class="program-overlay"></div><div class="program-body"><div class="program-cat">Muscle Building</div><div class="program-name">Mass Protocol</div><div class="program-desc">Progressive overload system for maximum hypertrophy.</div></div></div>
+    <div class="program-card reveal" style="transition-delay:0.2s"><div class="program-icon">⚡</div><div class="program-overlay"></div><div class="program-body"><div class="program-cat">Strength</div><div class="program-name">Iron Will</div><div class="program-desc">Powerlifting foundations — squat, bench, deadlift mastery.</div></div></div>
+    <div class="program-card reveal" style="transition-delay:0.3s"><div class="program-icon">🏃</div><div class="program-overlay"></div><div class="program-body"><div class="program-cat">Functional Fitness</div><div class="program-name">Alpha Flow</div><div class="program-desc">Move better, perform better in every aspect of life.</div></div></div>
+    <div class="program-card reveal" style="transition-delay:0.4s"><div class="program-icon">🌺</div><div class="program-overlay"></div><div class="program-body"><div class="program-cat">Women's Fitness</div><div class="program-name">Fierce Form</div><div class="program-desc">Tone, strengthen, and build confidence from within.</div></div></div>
+    <div class="program-card reveal" style="transition-delay:0.5s"><div class="program-icon">🧘</div><div class="program-overlay"></div><div class="program-body"><div class="program-cat">Senior Fitness</div><div class="program-name">Evergreen</div><div class="program-desc">Safe, effective training for sustained vitality at any age.</div></div></div>
+  </div>
+</section>
+
+<!-- Dashboard -->
+<section id="dashboard">
+  <div class="section-eye reveal">Live Metrics</div>
+  <h2 class="section-title reveal">PROGRESS <span style="color:var(--orange)">DASHBOARD</span></h2>
+  <p class="section-sub reveal">Real-time performance tracking powered by Tiger AI.</p>
+  <div class="dashboard reveal">
+    <div class="dashboard-header">
+      <span class="dashboard-title">Tiger Fitness · Live Dashboard</span>
+      <span class="dash-dot"></span>
+    </div>
+    <div class="dashboard-body">
+      <div class="dash-kpis">
+        <div class="dash-kpi"><div class="kpi-label">Calories Burned</div><div class="kpi-value">2,847</div><div class="kpi-change">↑ 12% vs last week</div></div>
+        <div class="dash-kpi"><div class="kpi-label">Workout Streak</div><div class="kpi-value">🔥 14</div><div class="kpi-change">↑ 2 days more</div></div>
+        <div class="dash-kpi"><div class="kpi-label">Goal Completion</div><div class="kpi-value">87%</div><div class="kpi-change">↑ On track</div></div>
+        <div class="dash-kpi"><div class="kpi-label">Muscle Gain</div><div class="kpi-value">+2.4 kg</div><div class="kpi-change">↑ This month</div></div>
+      </div>
+      <div class="dash-chart-area">
+        <div class="chart-title">Weekly Training Volume</div>
+        <div class="chart-bars" id="chart-bars">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="section-eye reveal">Real Results</div>
+  <h2 class="section-title reveal">THE <span style="color:var(--orange)">PRIDE</span> SPEAKS</h2>
+  <div class="testimonials-track">
+    <div class="testimonials-inner" id="testi-inner">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- Transformation -->
+<section id="transformation">
+  <div class="section-eye reveal">Proof of Work</div>
+  <h2 class="section-title reveal">TRANSFORMATION <span style="color:var(--orange)">GALLERY</span></h2>
+  <p class="section-sub reveal">Real members. Real results. No filters, no excuses.</p>
+  <div class="transform-grid">
+    <div class="transform-card reveal">
+      <div class="transform-imgs">
+        <div class="transform-img before">📸</div>
+        <div class="transform-img after">💪</div>
+        <span class="transform-img-label b">Before</span>
+        <span class="transform-img-label a">After</span>
+      </div>
+      <div class="transform-body">
+        <div class="transform-name">Vikram Malhotra, 28</div>
+        <div class="transform-goal">Fat Loss Program</div>
+        <div class="transform-stat">Lost 18kg in 5 months · Still going strong</div>
+      </div>
+    </div>
+    <div class="transform-card reveal" style="transition-delay:0.15s">
+      <div class="transform-imgs">
+        <div class="transform-img before">📸</div>
+        <div class="transform-img after">🏋️</div>
+        <span class="transform-img-label b">Before</span>
+        <span class="transform-img-label a">After</span>
+      </div>
+      <div class="transform-body">
+        <div class="transform-name">Sneha Kapoor, 24</div>
+        <div class="transform-goal">Muscle Building</div>
+        <div class="transform-stat">Gained 6kg lean muscle in 4 months</div>
+      </div>
+    </div>
+    <div class="transform-card reveal" style="transition-delay:0.3s">
+      <div class="transform-imgs">
+        <div class="transform-img before">📸</div>
+        <div class="transform-img after">⚡</div>
+        <span class="transform-img-label b">Before</span>
+        <span class="transform-img-label a">After</span>
+      </div>
+      <div class="transform-body">
+        <div class="transform-name">Rohan Gupta, 35</div>
+        <div class="transform-goal">Strength Building</div>
+        <div class="transform-stat">Deadlift: 80kg → 140kg in 6 months</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Facilities -->
+<section id="facilities">
+  <div class="section-eye reveal">World-Class Setup</div>
+  <h2 class="section-title reveal">GYM <span style="color:var(--orange)">FACILITIES</span></h2>
+  <p class="section-sub reveal">Every zone is engineered to maximise your performance.</p>
+  <div class="facilities-grid">
+    <div class="facility-card reveal">
+      <div class="facility-icon">🏋️</div>
+      <div class="facility-tag">Heavy Iron</div>
+      <div class="facility-name">Strength Zone</div>
+      <div class="facility-desc">Olympic platforms, power racks, free weights up to 120kg. Built for serious lifters.</div>
+    </div>
+    <div class="facility-card reveal" style="transition-delay:0.1s">
+      <div class="facility-icon">🚴</div>
+      <div class="facility-tag">Cardio Floor</div>
+      <div class="facility-name">Cardio Arena</div>
+      <div class="facility-desc">50+ premium machines — treadmills, assault bikes, rowers, ski ergs.</div>
+    </div>
+    <div class="facility-card reveal" style="transition-delay:0.2s">
+      <div class="facility-icon">⚡</div>
+      <div class="facility-tag">Functional Training</div>
+      <div class="facility-name">CrossFit Section</div>
+      <div class="facility-desc">High-intensity zone with rigs, kettlebells, ropes, and turf track.</div>
+    </div>
+    <div class="facility-card reveal" style="transition-delay:0.3s">
+      <div class="facility-icon">🧘</div>
+      <div class="facility-tag">Regeneration</div>
+      <div class="facility-name">Recovery Zone</div>
+      <div class="facility-desc">Foam rollers, massage guns, stretching mats, and guided recovery tools.</div>
+    </div>
+    <div class="facility-card reveal" style="transition-delay:0.4s">
+      <div class="facility-icon">💨</div>
+      <div class="facility-tag">Wellness</div>
+      <div class="facility-name">Steam Room</div>
+      <div class="facility-desc">Eucalyptus steam therapy for muscle recovery and mental reset after workouts.</div>
+    </div>
+    <div class="facility-card reveal" style="transition-delay:0.5s">
+      <div class="facility-icon">🎯</div>
+      <div class="facility-tag">1-on-1</div>
+      <div class="facility-name">Coaching Area</div>
+      <div class="facility-desc">Private coaching bays with mirrored walls, video analysis, and dedicated equipment.</div>
+    </div>
+  </div>
+</section>
+
+<!-- App Promo -->
+<section id="app">
+  <div class="app-inner">
+    <div class="reveal-left">
+      <div class="section-eye">Always With You</div>
+      <h2 class="section-title">TIGER <span style="color:var(--orange)">APP</span></h2>
+      <p class="section-sub">Your coach in your pocket. Track, analyze, and optimize every single day.</p>
+      <div class="app-features">
+        <div class="app-feature">
+          <div class="app-feature-icon">📊</div>
+          <div><div class="app-feature-name">Workout Tracking</div><div class="app-feature-desc">Log every set, rep, and weight. Visualize your progress over time.</div></div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-icon">🥗</div>
+          <div><div class="app-feature-name">Diet Monitoring</div><div class="app-feature-desc">Macro tracking, meal logging, and personalized nutrition insights.</div></div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-icon">🤖</div>
+          <div><div class="app-feature-name">AI Recommendations</div><div class="app-feature-desc">Adaptive training suggestions based on your performance data.</div></div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-icon">📈</div>
+          <div><div class="app-feature-name">Weekly Reports</div><div class="app-feature-desc">Comprehensive progress summaries delivered every Sunday.</div></div>
+        </div>
+      </div>
+      <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:2rem">Coming Soon — Notify Me</a>
+    </div>
+    <div class="reveal-right">
+      <div class="app-mockup">
+        <div class="app-mockup-notch"></div>
+        <div class="app-screen">
+          <div class="app-screen-stat" style="color:var(--orange)">🔥 487</div>
+          <div class="app-screen-label">Calories Burned Today</div>
+        </div>
+        <div class="app-screen">
+          <div class="app-screen-stat" style="color:var(--gold)">💪 Day 14</div>
+          <div class="app-screen-label">Workout Streak</div>
+        </div>
+        <div class="app-screen">
+          <div class="app-screen-stat" style="color:#2ecc71">↑ 2.1kg</div>
+          <div class="app-screen-label">Muscle Gained This Month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog -->
+<section id="blog">
+  <div class="section-eye reveal">Tiger Knowledge</div>
+  <h2 class="section-title reveal">FITNESS <span style="color:var(--orange)">INTEL</span></h2>
+  <p class="section-sub reveal">Science, strategy, and stories from inside the Iron Paradise.</p>
+  <div class="blog-grid">
+    <div class="blog-card reveal">
+      <div class="blog-thumb">🔬</div>
+      <div class="blog-body">
+        <div class="blog-cat">Workout Science</div>
+        <div class="blog-title">Why Progressive Overload Is The Only Rule That Matters</div>
+        <div class="blog-excerpt">Forget every fitness hack you've heard. One principle governs all muscle growth.</div>
+        <div class="blog-meta"><span>Jun 2025</span><span>5 min read</span></div>
+      </div>
+    </div>
+    <div class="blog-card reveal" style="transition-delay:0.15s">
+      <div class="blog-thumb">🥩</div>
+      <div class="blog-body">
+        <div class="blog-cat">Nutrition</div>
+        <div class="blog-title">The Truth About Protein: How Much You Actually Need</div>
+        <div class="blog-excerpt">Debunking myths and giving you the actual science on daily protein requirements.</div>
+        <div class="blog-meta"><span>May 2025</span><span>7 min read</span></div>
+      </div>
+    </div>
+    <div class="blog-card reveal" style="transition-delay:0.3s">
+      <div class="blog-thumb">😴</div>
+      <div class="blog-body">
+        <div class="blog-cat">Recovery</div>
+        <div class="blog-title">Sleep Is Your Most Powerful Performance Drug</div>
+        <div class="blog-excerpt">The often-ignored pillar of fitness that elite athletes prioritize above all else.</div>
+        <div class="blog-meta"><span>Apr 2025</span><span>6 min read</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" style="background:var(--dark)">
+  <div class="section-eye reveal">Begin Your Journey</div>
+  <h2 class="section-title reveal">GET IN <span style="color:var(--orange)">TOUCH</span></h2>
+  <div class="contact-inner">
+    <div class="reveal-left">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div><div class="contact-item-label">Location</div><div class="contact-item-val">Hazratganj, Lucknow, UP 226001</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div><div class="contact-item-label">Phone</div><div class="contact-item-val">+91 98765 43210</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div><div class="contact-item-label">Email</div><div class="contact-item-val">info@thetigerfitness.in</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div><div class="contact-item-label">Hours</div><div class="contact-item-val">5:00 AM – 11:00 PM · 7 days a week</div></div>
+      </div>
+      <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="https://wa.me/919876543210" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px">💬 WhatsApp Us</a>
+        <a href="tel:+919876543210" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px">📞 Call Now</a>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name"></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+      <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Tell us your fitness goal…"></textarea></div>
+      <button class="btn-primary" style="width:100%;padding:16px">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- Developer Section -->
+<section id="developer">
+  <div class="dev-grid-bg"></div>
+  <div class="dev-glow"></div>
+  <div class="dev-content">
+    <div class="dev-init" id="dev-init-text">[ SYSTEM ] Initializing Developer Profile<span class="cursor-blink">_</span></div>
+    <div class="dev-title">Digital Architecture<br>Behind The Tiger</div>
+    <div class="dev-subtitle">// SYSTEM ARCHITECT · FULL STACK ENGINEER · UI/UX DESIGNER</div>
+    <div class="dev-body">
+      <div class="holo-card">
+        <div class="holo-scan"></div>
+        <div class="dev-name">Mohammad Ashraf</div>
+        <div class="dev-role">[ ROLE ] Full Stack Web Developer & Digital Experience Designer</div>
+        <div><span class="dev-org"><span class="dev-org-label">◈ D-Mappers Organization</span></span></div>
+        <div class="dev-about">"Building futuristic digital experiences that combine performance, aesthetics, automation, and business growth."</div>
+        <div class="dev-stats-grid">
+          <div class="dev-stat-item"><div class="dev-stat-n">12+</div><div class="dev-stat-l">Deployed Sites</div></div>
+          <div class="dev-stat-item"><div class="dev-stat-n">∞</div><div class="dev-stat-l">Ideas Building</div></div>
+          <div class="dev-stat-item"><div class="dev-stat-n">100%</div><div class="dev-stat-l">Mobile First</div></div>
+          <div class="dev-stat-item"><div class="dev-stat-n">UI/UX</div><div class="dev-stat-l">Design Expert</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="holo-card" style="margin-bottom:1.5rem">
+          <div class="holo-scan"></div>
+          <div class="dev-skills-title">// TECH STACK</div>
+          <div class="dev-skills">
+            <span class="dev-skill">HTML</span><span class="dev-skill">CSS</span><span class="dev-skill">JavaScript</span>
+            <span class="dev-skill">Python</span><span class="dev-skill">SQL</span><span class="dev-skill">Bootstrap</span>
+            <span class="dev-skill">Tailwind CSS</span><span class="dev-skill">API Integration</span><span class="dev-skill">Automation</span>
+          </div>
+          <div class="dev-skills-title" style="margin-top:1.5rem">// CONNECT</div>
+          <div class="dev-links">
+            <a href="https://ashraf120814.github.io/My-Portfolio/" target="_blank" rel="noopener" class="dev-link">
+              <span class="dev-link-icon">🌐</span>ashraf120814.github.io/My-Portfolio
+            </a>
+            <a href="https://github.com/Ashraf120814" target="_blank" rel="noopener" class="dev-link">
+              <span class="dev-link-icon">⌥</span>github.com/Ashraf120814
+            </a>
+            <a href="https://www.linkedin.com/in/mohammad-ashraf-a07942378" target="_blank" rel="noopener" class="dev-link">
+              <span class="dev-link-icon">◈</span>linkedin.com/in/mohammad-ashraf-a07942378
+            </a>
+          </div>
+        </div>
+        <div class="dev-loaded" id="dev-loaded">[ STATUS ] Developer Profile Successfully Loaded <span class="cursor-blink">✦</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">THE TIGER FITNESS</div>
+      <div class="footer-tagline">Built By Discipline. Powered By Consistency.</div>
+      <div class="footer-desc">Lucknow's most elite training environment. Where ordinary people achieve extraordinary transformations.</div>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Instagram">📸</a>
+        <a href="#" class="social-btn" aria-label="Facebook">📘</a>
+        <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+        <a href="#" class="social-btn" aria-label="WhatsApp">💬</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="#programs">Fat Loss</a></li>
+        <li><a href="#programs">Muscle Building</a></li>
+        <li><a href="#programs">Strength Training</a></li>
+        <li><a href="#programs">Women's Fitness</a></li>
+        <li><a href="#programs">Senior Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#membership">Membership</a></li>
+        <li><a href="#trainers">Coaches</a></li>
+        <li><a href="#facilities">Facilities</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Newsletter</div>
+      <div style="font-size:0.8rem;color:rgba(240,240,245,0.4);line-height:1.6">Get weekly fitness tips, workout plans, and exclusive member offers.</div>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="your@email.com">
+        <button class="newsletter-btn">Go</button>
+      </div>
+      <div class="footer-col-title" style="margin-top:1.5rem">Policies</div>
+      <ul class="footer-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 The Tiger Fitness. All rights reserved.</span>
+    <span>Built by <a href="https://ashraf120814.github.io/My-Portfolio/" style="color:var(--orange)" target="_blank">Mohammad Ashraf</a> · D-Mappers</span>
+  </div>
+</footer>
+
+<!-- Chatbot -->
+<button id="chat-toggle" aria-label="Open Tiger AI Chat" onclick="toggleChat()">🐯</button>
+<div id="chat-bubble">
+  <div class="chat-header">
+    <span class="chat-header-icon">🤖</span>
+    <div>
+      <div class="chat-header-name">TIGER AI</div>
+      <div class="chat-header-status">● Online · Instant Replies</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-quickbtns" id="chat-quickbtns">
+    <button class="qbtn" onclick="quickMsg('Membership plans?')">Membership plans</button>
+    <button class="qbtn" onclick="quickMsg('Gym timings?')">Gym timings</button>
+    <button class="qbtn" onclick="quickMsg('Free trial?')">Free trial</button>
+    <button class="qbtn" onclick="quickMsg('Contact info?')">Contact</button>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chat-input" placeholder="Ask Tiger AI…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- Sticky Side -->
+<div class="sticky-side">
+  <a href="https://wa.me/919876543210" class="sticky-btn" aria-label="WhatsApp" title="WhatsApp">💬</a>
+  <a href="tel:+919876543210" class="sticky-btn" aria-label="Call" title="Call Us">📞</a>
+</div>
+
+<script>
+// ===== LOADER =====
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    initCounters();
+    initChartBars();
+  }, 2000);
+});
+
+// ===== SCROLL PROGRESS =====
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scroll-progress');
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  el.style.width = pct + '%';
+}, { passive: true });
+
+// ===== NAV =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+const ham = document.getElementById('hamburger');
+const mMenu = document.getElementById('mobile-menu');
+function closeMobileMenu() { mMenu.classList.remove('open'); ham.classList.remove('open'); }
+ham.addEventListener('click', () => {
+  mMenu.classList.toggle('open');
+  ham.classList.toggle('open');
+});
+
+// ===== PARTICLES =====
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles;
+  function resize() {
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+  }
+  function createParticles() {
+    const count = Math.min(Math.floor(w * h / 15000), 60);
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 1.5 + 0.5,
+      a: Math.random() * 0.4 + 0.1
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,107,26,${p.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', () => { resize(); createParticles(); }, { passive: true });
+  resize(); createParticles(); draw();
+})();
+
+// ===== REVEAL OBSERVER =====
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+// ===== COUNTERS =====
+function initCounters() {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const increment = target / 60;
+    const timer = setInterval(() => {
+      current = Math.min(current + increment, target);
+      el.textContent = (current >= 1000 ? Math.round(current).toLocaleString() : Math.round(current)) + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 25);
+  });
+}
+
+// ===== CHART BARS =====
+function initChartBars() {
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const vals = [65, 80, 45, 90, 70, 55, 85];
+  const container = document.getElementById('chart-bars');
+  container.innerHTML = days.map((d, i) => `
+    <div class="chart-bar-wrap">
+      <div class="chart-bar" style="height:0;background:linear-gradient(to top,var(--orange),rgba(255,107,26,0.3));transition-delay:${i*0.1}s" data-h="${vals[i]}"></div>
+      <div class="chart-day">${d}</div>
+    </div>`).join('');
+  setTimeout(() => {
+    container.querySelectorAll('.chart-bar').forEach(b => {
+      b.style.height = b.dataset.h + '%';
+    });
+  }, 300);
+}
+
+// ===== CALCULATOR =====
+function switchTab(name) {
+  document.querySelectorAll('.calc-tab').forEach((t,i) => t.classList.toggle('active', ['bmi','bodyfat','calories','protein','water'][i] === name));
+  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+function calcBMI() {
+  const w = parseFloat(document.getElementById('bmi-weight').value);
+  const h = parseFloat(document.getElementById('bmi-height').value) / 100;
+  if (!w || !h) return;
+  const bmi = (w / (h * h)).toFixed(1);
+  const cats = [[18.5,'Underweight','Increase caloric intake and build lean mass.'],[25,'Normal Weight','Maintain your current lifestyle.','normal'],[30,'Overweight','Focus on caloric deficit and cardio.'],[99,'Obese','Consult a trainer and start a guided program.']];
+  let cat = cats.find(c => bmi < c[0]);
+  document.getElementById('bmi-val').textContent = bmi;
+  document.getElementById('bmi-cat').textContent = cat[1];
+  document.getElementById('bmi-detail').textContent = cat[2];
+  showResult('bmi-result');
+}
+function calcBodyFat() {
+  const g = document.getElementById('bf-gender').value;
+  const age = parseFloat(document.getElementById('bf-age').value);
+  const bmi = parseFloat(document.getElementById('bf-bmi').value);
+  if (!age || !bmi) return;
+  const bf = (1.2 * bmi + 0.23 * age - (g === 'm' ? 16.2 : 5.4)).toFixed(1);
+  document.getElementById('bf-val').textContent = bf + '%';
+  document.getElementById('bf-detail').textContent = bf < 20 ? 'Athletic range — excellent!' : bf < 25 ? 'Fitness range — well done.' : 'Work toward the fitness range with Tiger programs.';
+  showResult('bf-result');
+}
+function calcCalories() {
+  const g = document.getElementById('cal-gender').value;
+  const age = parseFloat(document.getElementById('cal-age').value);
+  const w = parseFloat(document.getElementById('cal-weight').value);
+  const h = parseFloat(document.getElementById('cal-height').value);
+  const act = parseFloat(document.getElementById('cal-activity').value);
+  if (!age || !w || !h) return;
+  const bmr = g === 'm' ? 88.362 + 13.397*w + 4.799*h - 5.677*age : 447.593 + 9.247*w + 3.098*h - 4.330*age;
+  const tdee = Math.round(bmr * act);
+  document.getElementById('cal-val').textContent = tdee.toLocaleString();
+  document.getElementById('cal-detail').textContent = `Cut: ${tdee-500} kcal/day | Bulk: ${tdee+300} kcal/day`;
+  showResult('cal-result');
+}
+function calcProtein() {
+  const w = parseFloat(document.getElementById('pro-weight').value);
+  const m = parseFloat(document.getElementById('pro-goal').value);
+  if (!w) return;
+  const g = Math.round(w * m);
+  document.getElementById('pro-val').textContent = g + 'g';
+  document.getElementById('pro-detail').textContent = `That's about ${Math.round(g/30)} protein-rich meals per day. Spread evenly.`;
+  showResult('pro-result');
+}
+function calcWater() {
+  const w = parseFloat(document.getElementById('wat-weight').value);
+  const a = parseFloat(document.getElementById('wat-activity').value);
+  if (!w) return;
+  const l = ((w * 0.033) + a).toFixed(1);
+  document.getElementById('wat-val').textContent = l + 'L';
+  document.getElementById('wat-detail').textContent = `Roughly ${Math.round(l/0.25)} glasses of water throughout the day.`;
+  showResult('wat-result');
+}
+function showResult(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+}
+
+// ===== TESTIMONIALS =====
+(function() {
+  const data = [
+    { name:'Aakash T.', tag:'Lost 22kg', stars:5, text:'Tiger Fitness changed my life. In 6 months I went from 95kg to 73kg. The coaches genuinely care about your progress.', init:'AT' },
+    { name:'Riya M.', tag:'Muscle Gain', stars:5, text:'As a woman who was intimidated by gyms, Tiger Fitness made me feel at home. Priya ma\'am is incredible. Up 5kg lean muscle!', init:'RM' },
+    { name:'Devraj K.', tag:'Strength PR', stars:5, text:'Deadlifted 150kg for the first time last week. 6 months ago I couldn\'t hit 80kg. Rahul sir\'s programming is elite.', init:'DK' },
+    { name:'Meera S.', tag:'Transformed', stars:5, text:'The AI tracking tools are next level. I can see exactly what\'s working. Best investment I\'ve ever made in myself.', init:'MS' },
+    { name:'Aryan B.', tag:'Beast Mode', stars:5, text:'Signed up for Beast Mode plan. Best decision ever. Unlimited personal training is insane value. Results speak.', init:'AB' },
+    { name:'Ananya R.', tag:'Fat Loss', stars:5, text:'Down 16kg in 4 months following the Inferno Cut program. The nutrition guidance alone is worth the price.', init:'AR' },
+  ];
+  // Double for infinite scroll
+  const all = [...data, ...data];
+  const inner = document.getElementById('testi-inner');
+  inner.innerHTML = all.map(t => `
+    <div class="testi-card">
+      <div class="testi-stars">${'★'.repeat(t.stars)}</div>
+      <div class="testi-text">${t.text}</div>
+      <div class="testi-author">
+        <div class="testi-avatar">${t.init}</div>
+        <div><div class="testi-name">${t.name}</div><div class="testi-tag">${t.tag}</div></div>
+      </div>
+    </div>`).join('');
+})();
+
+// ===== CHATBOT =====
+let chatOpen = false;
+const botReplies = {
+  'membership': 'We offer three plans:\n• Warrior — ₹1,499/mo (gym access + basic classes)\n• Alpha — ₹2,999/mo (+ personal training 4x/mo + AI tracking)\n• Beast Mode — ₹4,999/mo (unlimited personal training + all features)\n\nVisit the Membership section above to compare!',
+  'plan': 'We offer three plans:\n• Warrior — ₹1,499/mo\n• Alpha — ₹2,999/mo (most popular)\n• Beast Mode — ₹4,999/mo (elite)\n\nAll include locker access and group classes!',
+  'timing': 'Tiger Fitness is open 5:00 AM – 11:00 PM, 7 days a week including holidays.',
+  'time': 'Our gym is open 5:00 AM – 11:00 PM every day of the week. 🐯',
+  'hour': 'We\'re open 5AM to 11PM daily — so no matter when your energy hits, we\'re here.',
+  'trial': 'Absolutely! Book a free 1-day trial session. Just visit the Contact section, fill the form, and we\'ll get back to you within 2 hours. 💪',
+  'free': 'Yes! We offer a free trial session for all new members. Fill the inquiry form in the Contact section and we\'ll set it up.',
+  'contact': 'You can reach us:\n📍 Hazratganj, Lucknow\n📞 +91 98765 43210\n📧 info@thetigerfitness.in\n💬 WhatsApp button at bottom right!',
+  'location': 'We\'re located in Hazratganj, Lucknow, UP 226001 — right in the heart of the city. 🗺️',
+  'trainer': 'Our elite coaches:\n🦁 Arjun Singh — Strength & Conditioning (8+ yrs)\n🐯 Priya Sharma — Fat Loss & Functional (6+ yrs)\n⚡ Rahul Verma — Athletic Performance (10+ yrs)\n\nAll NASM/ACE/CSCS certified!',
+  'coach': 'Tiger Fitness has 12+ expert coaches specializing in everything from powerlifting to women\'s fitness. Check the Trainers section!',
+  'price': 'Plans start at ₹1,499/month. We also have quarterly and annual options with great savings. Visit the Membership section!',
+  'cost': 'Memberships from ₹1,499/month. Worth every rupee! 🔥 See all plans in the Membership section.',
+  'workout': 'We offer 6 core programs: Inferno Cut (fat loss), Mass Protocol (muscle), Iron Will (strength), Alpha Flow (functional), Fierce Form (women\'s), and Evergreen (seniors).',
+  'program': 'Our programs are science-backed and results-proven:\n• Fat Loss → Inferno Cut\n• Muscle Building → Mass Protocol\n• Strength → Iron Will\n• Functional → Alpha Flow\n• Women\'s → Fierce Form\n• Senior → Evergreen',
+  'diet': 'Our nutrition guidance covers custom meal plans, macro tracking, and supplement advice. Alpha and Beast Mode members get full nutrition coaching included.',
+  'nutrition': 'Tiger Fitness provides expert nutrition guidance. Beast Mode members get fully customized meal plans with weekly check-ins from our nutrition coaches.',
+  'default': 'I\'m Tiger AI 🐯 — I can help with membership plans, timings, pricing, trainer info, programs, and diet guidance. What would you like to know?'
+};
+
+function botReply(msg) {
+  const lower = msg.toLowerCase();
+  const key = Object.keys(botReplies).find(k => k !== 'default' && lower.includes(k));
+  return botReplies[key || 'default'];
+}
+
+function addMsg(text, type) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${type}`;
+  div.style.whiteSpace = 'pre-line';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const bubble = document.getElementById('chat-bubble');
+  bubble.classList.toggle('open', chatOpen);
+  if (chatOpen && document.getElementById('chat-messages').children.length === 0) {
+    setTimeout(() => addMsg('Hey there! 🐯 I\'m Tiger AI. Ask me anything — plans, timings, trainers, or workouts!', 'bot'), 300);
+  }
+}
+
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addMsg(msg, 'user');
+  input.value = '';
+  setTimeout(() => addMsg(botReply(msg), 'bot'), 600);
+}
+
+function quickMsg(msg) {
+  addMsg(msg, 'user');
+  setTimeout(() => addMsg(botReply(msg), 'bot'), 600);
+}
+
+// ===== DEV TYPING EFFECT =====
+(function() {
+  const el = document.getElementById('dev-init-text');
+  if (!el) return;
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      obs.disconnect();
+      setTimeout(() => {
+        el.innerHTML = '[ SYSTEM ] Developer Profile Successfully Loaded <span class="cursor-blink">✓</span>';
+        el.style.color = 'rgba(0,200,100,0.7)';
+      }, 1500);
+    }
+  }, { threshold: 0.5 });
+  obs.observe(el);
+})();
+</script>
+</body>
+</html>
