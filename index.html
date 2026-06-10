@@ -885,6 +885,141 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ===== BODYBUILDER TIGER MASCOT ===== */
+#scroll-tiger {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 90px;
+  height: 162px;
+  z-index: 8500;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: left 0.18s linear;
+  filter: drop-shadow(0 6px 20px rgba(255,107,26,0.55));
+  transform-origin: center bottom;
+  will-change: left, transform;
+  user-select: none;
+}
+#scroll-tiger svg { display: block; overflow: visible; }
+
+/* Facing direction */
+#scroll-tiger.face-left  { transform: scaleX(-1); }
+#scroll-tiger.face-right { transform: scaleX(1);  }
+
+/* IDLE: subtle bob + flex */
+#scroll-tiger.tiger-idle { animation: bb-idle 2.4s ease-in-out infinite; }
+@keyframes bb-idle {
+  0%,100% { transform: scaleX(var(--fx,1)) translateY(0) rotate(0deg); }
+  40%     { transform: scaleX(var(--fx,1)) translateY(-5px) rotate(-1.5deg); }
+  70%     { transform: scaleX(var(--fx,1)) translateY(-3px) rotate(1deg); }
+}
+
+/* RUN: bouncy sprint */
+#scroll-tiger.tiger-run { animation: bb-run 0.32s ease-in-out infinite; }
+@keyframes bb-run {
+  0%,100% { transform: scaleX(var(--fx,1)) translateY(0)    rotate(0deg); }
+  20%     { transform: scaleX(var(--fx,1)) translateY(-9px) rotate(-3deg); }
+  60%     { transform: scaleX(var(--fx,1)) translateY(-4px) rotate(2deg); }
+}
+
+/* Arms pump while running */
+#scroll-tiger.tiger-run .bb-arm-l { animation: arm-pump-l 0.32s ease-in-out infinite; transform-origin: 22px 70px; }
+#scroll-tiger.tiger-run .bb-arm-r { animation: arm-pump-r 0.32s ease-in-out infinite; transform-origin: 78px 70px; }
+@keyframes arm-pump-l {
+  0%,100% { transform: rotate(0deg); }
+  50%     { transform: rotate(-28deg); }
+}
+@keyframes arm-pump-r {
+  0%,100% { transform: rotate(0deg); }
+  50%     { transform: rotate(28deg); }
+}
+
+/* Legs stride while running */
+#scroll-tiger.tiger-run .bb-leg-l { animation: leg-stride-l 0.32s ease-in-out infinite; transform-origin: 38px 118px; }
+#scroll-tiger.tiger-run .bb-leg-r { animation: leg-stride-r 0.32s ease-in-out infinite; transform-origin: 62px 118px; }
+@keyframes leg-stride-l {
+  0%,100% { transform: rotate(0deg); }
+  50%     { transform: rotate(-22deg); }
+}
+@keyframes leg-stride-r {
+  0%,100% { transform: rotate(-22deg); }
+  50%     { transform: rotate(0deg); }
+}
+
+/* Shadow squash */
+#scroll-tiger.tiger-run .bb-shadow { animation: shadow-squash 0.32s ease-in-out infinite; transform-origin: 50px 177px; }
+@keyframes shadow-squash {
+  0%,100% { transform: scaleX(1); }
+  25%     { transform: scaleX(0.7); }
+}
+
+/* Sweat drops fly when running */
+#scroll-tiger.tiger-run .bb-sweat {
+  animation: sweat-fly 0.6s ease-out infinite;
+}
+@keyframes sweat-fly {
+  0%   { opacity: 0.9; transform: translate(0,0); }
+  100% { opacity: 0;   transform: translate(-12px,-18px); }
+}
+
+/* Aura pulse on idle */
+#scroll-tiger.tiger-idle .bb-aura {
+  animation: aura-pulse 2.4s ease-in-out infinite;
+}
+@keyframes aura-pulse {
+  0%,100% { stroke-opacity: 0.18; transform: scale(1);    transform-origin: 50px 90px; }
+  50%     { stroke-opacity: 0.38; transform: scale(1.04); transform-origin: 50px 90px; }
+}
+
+/* Eye blink */
+.bb-eye-l, .bb-eye-r {
+  animation: bb-blink 3.8s ease-in-out infinite;
+  transform-origin: center;
+}
+.bb-eye-r { animation-delay: 0.1s; }
+@keyframes bb-blink {
+  0%,88%,96%,100% { transform: scaleY(1);   }
+  92%             { transform: scaleY(0.05);}
+}
+
+/* Speech bubble */
+.bb-bubble {
+  position: absolute;
+  bottom: 108%;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: linear-gradient(135deg,var(--orange),var(--red));
+  color: #fff;
+  font-family: 'Rajdhani',sans-serif;
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em;
+  padding: 6px 14px; border-radius: 20px; white-space: nowrap;
+  pointer-events: none;
+  transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 4px 18px rgba(255,107,26,0.45);
+}
+.bb-bubble::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--red);
+}
+#scroll-tiger:hover .bb-bubble { transform: translateX(-50%) scale(1); }
+#scroll-tiger:active { filter: drop-shadow(0 6px 32px rgba(255,107,26,0.95)); }
+
+/* ===== BACK TO TOP ===== */
+#back-top {
+  position: fixed; bottom: 28px; left: 28px; z-index: 900;
+  width: 42px; height: 42px; border-radius: 8px;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--muted); font-size: 1.1rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0; pointer-events: none; transform: translateY(10px);
+}
+#back-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+#back-top:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
 </style>
 </head>
 <body>
@@ -901,7 +1036,7 @@ footer {
 
 <!-- Nav -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">THE <span>TIGER</span></a>
+  <a href="#hero" class="nav-logo">THE <span>TIGER FITNESS</span></a>
   <div class="nav-links">
     <a href="#programs">Programs</a>
     <a href="#membership">Membership</a>
@@ -1623,6 +1758,81 @@ footer {
 </div>
 
 <script>
+// ===== BODYBUILDER TIGER MASCOT =====
+(function() {
+  const tiger = document.getElementById('scroll-tiger');
+  if (!tiger) return;
+
+  let posX      = 5;     // vw
+  let faceRight = true;
+  let stopTimer = null;
+  let lastY     = window.scrollY;
+  const MAX_X   = 86;
+  const SPEED   = 20;
+
+  const roars = ['RAWR! 💪','BEAST MODE! 🔥','NO LIMITS! ⚡','GET GAINS! 🏋️','TRAIN HARD! 🐯','EAT. SLEEP. LIFT! 💥'];
+  let roarIdx = 0;
+
+  function applyFacing(right) {
+    faceRight = right;
+    // Use CSS custom property so idle animation respects direction
+    tiger.style.setProperty('--fx', right ? '1' : '-1');
+    tiger.style.transform = right ? 'scaleX(1)' : 'scaleX(-1)';
+  }
+
+  function startRun() {
+    tiger.classList.add('tiger-run');
+    tiger.classList.remove('tiger-idle');
+    clearTimeout(stopTimer);
+    stopTimer = setTimeout(stopRun, 260);
+  }
+
+  function stopRun() {
+    tiger.classList.remove('tiger-run');
+    tiger.classList.add('tiger-idle');
+  }
+
+  // Click / tap: show roar bubble + jump animation
+  tiger.addEventListener('click', () => {
+    const bubble = document.getElementById('bb-bubble');
+    if (bubble) bubble.textContent = roars[roarIdx++ % roars.length];
+    tiger.style.transition = 'left 0.18s linear, filter 0.1s';
+    tiger.style.filter = 'drop-shadow(0 6px 40px rgba(255,107,26,0.95)) brightness(1.15)';
+    setTimeout(() => { tiger.style.filter = 'drop-shadow(0 6px 20px rgba(255,107,26,0.55))'; }, 280);
+  });
+
+  window.addEventListener('scroll', () => {
+    const cur   = window.scrollY;
+    const delta = cur - lastY;
+    lastY       = cur;
+    if (delta === 0) return;
+
+    // Scroll down → run right; scroll up → run left
+    const goRight = delta > 0;
+    const dist    = SPEED * Math.min(Math.abs(delta) / 70, 2.2);
+
+    posX += goRight ? dist : -dist;
+
+    // Bounce off edges
+    if (posX >= MAX_X) { posX = MAX_X; applyFacing(false); }
+    else if (posX <= 0){ posX = 0;     applyFacing(true);  }
+    else               { applyFacing(goRight); }
+
+    tiger.style.left = posX + 'vw';
+    startRun();
+  }, { passive: true });
+
+  // Back-to-top visibility
+  const backBtn = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    if (backBtn) backBtn.classList.toggle('show', window.scrollY > 400);
+  }, { passive: true });
+
+  // Init
+  stopRun();
+  applyFacing(true);
+})();
+
 // ===== LOADER =====
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -1895,5 +2105,181 @@ function quickMsg(msg) {
   obs.observe(el);
 })();
 </script>
+
+<!-- ===== BODYBUILDER TIGER MASCOT ===== -->
+<div id="scroll-tiger" class="tiger-idle" aria-label="Tiger mascot" title="Click me! 🐯">
+  <svg id="bb-tiger" viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg" width="90" height="162">
+    <defs>
+      <radialGradient id="skinGrad" cx="50%" cy="40%" r="55%">
+        <stop offset="0%" stop-color="#c87941"/>
+        <stop offset="100%" stop-color="#8b4d1a"/>
+      </radialGradient>
+      <radialGradient id="faceGrad" cx="50%" cy="38%" r="58%">
+        <stop offset="0%" stop-color="#ffb870"/>
+        <stop offset="100%" stop-color="#d4761e"/>
+      </radialGradient>
+      <radialGradient id="shirtGrad" cx="50%" cy="40%" r="55%">
+        <stop offset="0%" stop-color="#ff8c30"/>
+        <stop offset="100%" stop-color="#c94a00"/>
+      </radialGradient>
+      <radialGradient id="shortGrad" cx="50%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="#1a1a2e"/>
+        <stop offset="100%" stop-color="#0d0d18"/>
+      </radialGradient>
+      <filter id="bbglow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Ground shadow -->
+    <ellipse cx="50" cy="177" rx="28" ry="4.5" fill="rgba(0,0,0,0.3)" class="bb-shadow"/>
+
+    <!-- ── SHOES ── -->
+    <ellipse cx="36" cy="170" rx="12" ry="6" fill="#1a1a2e"/>
+    <ellipse cx="64" cy="170" rx="12" ry="6" fill="#1a1a2e"/>
+    <rect x="27" y="163" width="17" height="9" rx="3" fill="#111"/>
+    <rect x="56" y="163" width="17" height="9" rx="3" fill="#111"/>
+    <rect x="28" y="164" width="15" height="3" rx="1.5" fill="#ff6b1a" opacity="0.6"/>
+    <rect x="57" y="164" width="15" height="3" rx="1.5" fill="#ff6b1a" opacity="0.6"/>
+
+    <!-- ── LEGS ── -->
+    <g class="bb-leg-l">
+      <rect x="29" y="118" width="18" height="48" rx="9" fill="url(#skinGrad)"/>
+      <!-- quad definition -->
+      <ellipse cx="38" cy="130" rx="9" ry="5" fill="rgba(0,0,0,0.12)"/>
+    </g>
+    <g class="bb-leg-r">
+      <rect x="53" y="118" width="18" height="48" rx="9" fill="url(#skinGrad)"/>
+      <ellipse cx="62" cy="130" rx="9" ry="5" fill="rgba(0,0,0,0.12)"/>
+    </g>
+
+    <!-- ── SHORTS ── -->
+    <rect x="27" y="112" width="46" height="28" rx="8" fill="url(#shortGrad)"/>
+    <!-- Shorts stripe -->
+    <line x1="50" y1="113" x2="50" y2="139" stroke="#ff6b1a" stroke-width="2" opacity="0.7"/>
+    <rect x="27" y="112" width="46" height="5" rx="3" fill="#0d0d18" opacity="0.5"/>
+
+    <!-- ── TORSO (massive) ── -->
+    <path d="M22,115 Q18,95 20,80 Q22,65 50,62 Q78,65 80,80 Q82,95 78,115 Z" fill="url(#shirtGrad)"/>
+    <!-- Chest definition -->
+    <path d="M30,75 Q50,85 70,75" stroke="rgba(0,0,0,0.2)" stroke-width="2" fill="none"/>
+    <ellipse cx="39" cy="80" rx="10" ry="7" fill="rgba(255,255,255,0.06)"/>
+    <ellipse cx="61" cy="80" rx="10" ry="7" fill="rgba(255,255,255,0.06)"/>
+    <!-- Shirt logo -->
+    <text x="50" y="100" text-anchor="middle" font-size="9" font-weight="bold" fill="rgba(255,255,255,0.6)" font-family="Arial">TIGER</text>
+
+    <!-- ── MASSIVE ARMS ── -->
+    <!-- Left arm (raised / curling) -->
+    <g class="bb-arm-l">
+      <!-- Upper arm -->
+      <ellipse cx="14" cy="84" rx="10" ry="16" fill="url(#skinGrad)" transform="rotate(-20,14,84)"/>
+      <!-- Bicep peak -->
+      <ellipse cx="11" cy="75" rx="7" ry="5" fill="#c87941" opacity="0.7"/>
+      <!-- Forearm -->
+      <ellipse cx="9"  cy="100" rx="8" ry="13" fill="url(#skinGrad)" transform="rotate(15,9,100)"/>
+      <!-- Fist -->
+      <rect x="3" y="108" width="14" height="11" rx="5" fill="url(#skinGrad)"/>
+      <!-- Knuckle lines -->
+      <line x1="6"  y1="109" x2="6"  y2="118" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+      <line x1="9"  y1="109" x2="9"  y2="119" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+      <line x1="12" y1="109" x2="12" y2="118" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+    </g>
+    <!-- Right arm (flexed out) -->
+    <g class="bb-arm-r">
+      <!-- Upper arm -->
+      <ellipse cx="86" cy="84" rx="10" ry="16" fill="url(#skinGrad)" transform="rotate(20,86,84)"/>
+      <!-- Bicep peak -->
+      <ellipse cx="89" cy="75" rx="7" ry="5" fill="#c87941" opacity="0.7"/>
+      <!-- Forearm -->
+      <ellipse cx="91" cy="100" rx="8" ry="13" fill="url(#skinGrad)" transform="rotate(-15,91,100)"/>
+      <!-- Fist -->
+      <rect x="83" y="108" width="14" height="11" rx="5" fill="url(#skinGrad)"/>
+      <line x1="86" y1="109" x2="86" y2="118" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+      <line x1="89" y1="109" x2="89" y2="119" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+      <line x1="92" y1="109" x2="92" y2="118" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+    </g>
+
+    <!-- ── NECK ── -->
+    <rect x="40" y="55" width="20" height="14" rx="8" fill="url(#skinGrad)"/>
+
+    <!-- ── TIGER HEAD ── -->
+    <!-- Head base -->
+    <ellipse cx="50" cy="38" rx="26" ry="28" fill="url(#faceGrad)"/>
+    <!-- Cheek lighter area -->
+    <ellipse cx="50" cy="44" rx="17" ry="14" fill="#ffd8a0" opacity="0.5"/>
+
+    <!-- Ears -->
+    <polygon points="24,16 28,2  38,18" fill="#ff6b1a"/>
+    <polygon points="26,15 29,5  36,17" fill="#e8192c" opacity="0.8"/>
+    <polygon points="76,16 72,2  62,18" fill="#ff6b1a"/>
+    <polygon points="74,15 71,5  64,17" fill="#e8192c" opacity="0.8"/>
+
+    <!-- Forehead tiger stripes -->
+    <path d="M36,14 Q34,20 36,27" stroke="#8b3800" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M44,11 Q44,18 44,25" stroke="#8b3800" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M50,10 Q50,17 50,24" stroke="#8b3800" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M56,11 Q56,18 56,25" stroke="#8b3800" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M64,14 Q66,20 64,27" stroke="#8b3800" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+
+    <!-- Cheek stripes -->
+    <path d="M27,36 Q30,40 27,44" stroke="#8b3800" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M73,36 Q70,40 73,44" stroke="#8b3800" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- Cheek blush -->
+    <ellipse cx="30" cy="43" rx="8" ry="5" fill="#ff9966" opacity="0.25"/>
+    <ellipse cx="70" cy="43" rx="8" ry="5" fill="#ff9966" opacity="0.25"/>
+
+    <!-- Eyes (whites) -->
+    <ellipse cx="38" cy="34" rx="8" ry="7.5" fill="white"/>
+    <ellipse cx="62" cy="34" rx="8" ry="7.5" fill="white"/>
+    <!-- Pupils -->
+    <ellipse cx="38" cy="34.5" rx="4.8" ry="5.8" fill="#1a0800" class="bb-eye-l"/>
+    <ellipse cx="62" cy="34.5" rx="4.8" ry="5.8" fill="#1a0800" class="bb-eye-r"/>
+    <!-- Iris orange ring -->
+    <ellipse cx="38" cy="34.5" rx="5.5" ry="6.4" fill="none" stroke="#d4780a" stroke-width="1" opacity="0.6"/>
+    <ellipse cx="62" cy="34.5" rx="5.5" ry="6.4" fill="none" stroke="#d4780a" stroke-width="1" opacity="0.6"/>
+    <!-- Eye shine -->
+    <ellipse cx="35.5" cy="31.5" rx="2" ry="1.6" fill="white" opacity="0.9"/>
+    <ellipse cx="59.5" cy="31.5" rx="2" ry="1.6" fill="white" opacity="0.9"/>
+    <!-- Eyebrows (angry/intense) -->
+    <path d="M31,27 Q38,24 45,27" stroke="#5a2800" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M55,27 Q62,24 69,27" stroke="#5a2800" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- Nose -->
+    <ellipse cx="50" cy="44"   rx="5.5" ry="4"   fill="#7a3000"/>
+    <ellipse cx="50" cy="42.5" rx="4"   ry="2.5" fill="#cc5500"/>
+    <ellipse cx="47.8" cy="44.8" rx="1.4" ry="1" fill="#4a1200" opacity="0.8"/>
+    <ellipse cx="52.2" cy="44.8" rx="1.4" ry="1" fill="#4a1200" opacity="0.8"/>
+
+    <!-- Mouth -->
+    <path d="M42,50 Q50,56 58,50" stroke="#7a3000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <line x1="50" y1="48" x2="50" y2="51" stroke="#7a3000" stroke-width="1.8"/>
+    <!-- Teeth hint -->
+    <rect x="44" y="51" width="5" height="3.5" rx="1.5" fill="white" opacity="0.8"/>
+    <rect x="51" y="51" width="5" height="3.5" rx="1.5" fill="white" opacity="0.8"/>
+
+    <!-- Whiskers -->
+    <line x1="8"  y1="42" x2="28" y2="44" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
+    <line x1="6"  y1="47" x2="26" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
+    <line x1="7"  y1="52" x2="27" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
+    <line x1="72" y1="44" x2="92" y2="42" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
+    <line x1="74" y1="47" x2="94" y2="47" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
+    <line x1="73" y1="50" x2="93" y2="52" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
+
+    <!-- Sweat drops (while running) -->
+    <ellipse cx="18" cy="25" rx="2.5" ry="4" fill="#88ccff" opacity="0" class="bb-sweat"/>
+    <ellipse cx="82" cy="22" rx="2"   ry="3.5" fill="#88ccff" opacity="0" class="bb-sweat" style="animation-delay:.2s"/>
+
+    <!-- Energy aura (orange glow ring) -->
+    <ellipse cx="50" cy="90" rx="44" ry="80" fill="none" stroke="rgba(255,107,26,0.18)" stroke-width="3" class="bb-aura"/>
+  </svg>
+  <!-- Speech bubble -->
+  <div class="bb-bubble" id="bb-bubble">RAWR! 💪</div>
+</div>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
 </body>
 </html>
