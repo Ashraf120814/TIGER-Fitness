@@ -172,12 +172,7 @@ nav.scrolled {
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
 }
 /* Tiger silhouette */
-.tiger-silhouette {
-  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
-  width: min(45vw, 480px); opacity: 0.12; pointer-events: none;
-  filter: drop-shadow(0 0 60px var(--orange));
-  animation: tiger-breathe 4s ease-in-out infinite;
-}
+
 @keyframes tiger-breathe {
   0%,100%{transform:translateY(-50%) scale(1)} 50%{transform:translateY(-52%) scale(1.02)}
 }
