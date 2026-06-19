@@ -1759,38 +1759,6 @@ footer {
 
 <script>
 // ===== BODYBUILDER TIGER MASCOT =====
-(function() {
-  const tiger = document.getElementById('scroll-tiger');
-  if (!tiger) return;
-
-  let posX      = 5;     // vw
-  let faceRight = true;
-  let stopTimer = null;
-  let lastY     = window.scrollY;
-  const MAX_X   = 86;
-  const SPEED   = 20;
-
-  const roars = ['RAWR! 💪','BEAST MODE! 🔥','NO LIMITS! ⚡','GET GAINS! 🏋️','TRAIN HARD! 🐯','EAT. SLEEP. LIFT! 💥'];
-  let roarIdx = 0;
-
-  function applyFacing(right) {
-    faceRight = right;
-    // Use CSS custom property so idle animation respects direction
-    tiger.style.setProperty('--fx', right ? '1' : '-1');
-    tiger.style.transform = right ? 'scaleX(1)' : 'scaleX(-1)';
-  }
-
-  function startRun() {
-    tiger.classList.add('tiger-run');
-    tiger.classList.remove('tiger-idle');
-    clearTimeout(stopTimer);
-    stopTimer = setTimeout(stopRun, 260);
-  }
-
-  function stopRun() {
-    tiger.classList.remove('tiger-run');
-    tiger.classList.add('tiger-idle');
-  }
 
   // Click / tap: show roar bubble + jump animation
   tiger.addEventListener('click', () => {
