@@ -171,15 +171,29 @@ nav.scrolled {
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
 }
-/* Tiger silhouette */
-.tiger-silhouette {
-  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
-  width: min(45vw, 480px); opacity: 0.12; pointer-events: none;
-  filter: drop-shadow(0 0 60px var(--orange));
+/* Tiger photo (real image, replacing silhouette) */
+.tiger-photo-wrap {
+  position: absolute; right: 2%; top: 50%; transform: translateY(-50%);
+  width: min(42vw, 460px); pointer-events: none; z-index: 1;
+}
+.tiger-photo-wrap::before {
+  content: '';
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 110%; height: 110%;
+  background: radial-gradient(circle, rgba(255,107,26,0.22) 0%, transparent 70%);
+  animation: aura-glow 3s ease-in-out infinite alternate;
+}
+@keyframes aura-glow {
+  from { opacity: 0.5; transform: translate(-50%,-50%) scale(0.92); }
+  to   { opacity: 1;   transform: translate(-50%,-50%) scale(1.06); }
+}
+.tiger-photo {
+  position: relative; z-index: 2; width: 100%;
+  filter: drop-shadow(0 0 45px rgba(255,107,26,0.55));
   animation: tiger-breathe 4s ease-in-out infinite;
 }
 @keyframes tiger-breathe {
-  0%,100%{transform:translateY(-50%) scale(1)} 50%{transform:translateY(-52%) scale(1.02)}
+  0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.015)}
 }
 .hero-content { position: relative; z-index: 2; max-width: 700px; }
 .hero-eyebrow {
@@ -872,7 +886,7 @@ footer {
   .app-inner { grid-template-columns: 1fr; }
   .hero-stats { grid-template-columns: repeat(2,1fr); }
   .dash-kpis { grid-template-columns: repeat(2,1fr); }
-  .tiger-silhouette { opacity: 0.05; }
+  .tiger-photo-wrap { opacity: 0.12; }
   .dev-stats-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 480px) {
@@ -1065,9 +1079,9 @@ footer {
   <div class="hero-bg"></div>
   <canvas id="particles-canvas"></canvas>
   <div class="hero-grid"></div>
-  <svg class="tiger-silhouette" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-    <path fill="white" d="M200 20 C160 20, 120 40, 100 70 C80 100, 75 120, 80 140 C60 145, 50 160, 55 175 C40 180, 35 200, 45 215 C50 235, 70 245, 90 240 C95 260, 115 275, 140 270 C155 290, 185 295, 200 290 C215 295, 245 290, 260 270 C285 275, 305 260, 310 240 C330 245, 350 235, 355 215 C365 200, 360 180, 345 175 C355 160, 345 145, 325 140 C330 120, 325 100, 305 70 C280 40, 240 20, 200 20 Z M150 110 C145 105, 140 108, 142 115 C144 122, 155 125, 158 118 C161 111, 156 107, 150 110 Z M250 110 C244 107, 239 111, 242 118 C245 125, 256 122, 258 115 C260 108, 255 105, 250 110 Z M185 155 C180 150, 175 155, 178 162 C181 169, 195 170, 200 165 C205 170, 219 169, 222 162 C225 155, 220 150, 215 155 C210 148, 205 148, 200 150 C195 148, 190 148, 185 155 Z"/>
-  </svg>
+  <div class="tiger-photo-wrap">
+    <img src="TIGER_PHOTO_BASE64_PLACEHOLDER" alt="Tiger Fitness Mascot" class="tiger-photo">
+  </div>
   <div class="hero-content">
     <div class="hero-eyebrow">Elite Performance Center</div>
     <h1 class="hero-h1">UNLEASH<br>THE <span class="highlight">TIGER</span><br>WITHIN</h1>
@@ -1306,7 +1320,7 @@ footer {
     <div class="trainer-card reveal">
       <div class="trainer-img">🦁</div>
       <div class="trainer-body">
-        <div class="trainer-name">XYZ</div>
+        <div class="trainer-name">Arjun Rawat</div>
         <div class="trainer-role">Strength & Conditioning</div>
         <div class="trainer-stats">
           <div class="t-stat"><div class="t-stat-num">8+</div><div class="t-stat-label">Years</div></div>
@@ -1323,7 +1337,7 @@ footer {
     <div class="trainer-card reveal" style="transition-delay:0.15s">
       <div class="trainer-img">🐯</div>
       <div class="trainer-body">
-        <div class="trainer-name">XYZ</div>
+        <div class="trainer-name">Priya Sharma</div>
         <div class="trainer-role">Fat Loss & Functional</div>
         <div class="trainer-stats">
           <div class="t-stat"><div class="t-stat-num">6+</div><div class="t-stat-label">Years</div></div>
@@ -1340,7 +1354,7 @@ footer {
     <div class="trainer-card reveal" style="transition-delay:0.3s">
       <div class="trainer-img">⚡</div>
       <div class="trainer-body">
-        <div class="trainer-name">XYZ</div>
+        <div class="trainer-name">Rahul Verma</div>
         <div class="trainer-role">Athletic Performance</div>
         <div class="trainer-stats">
           <div class="t-stat"><div class="t-stat-num">10+</div><div class="t-stat-label">Years</div></div>
@@ -1424,7 +1438,7 @@ footer {
         <span class="transform-img-label a">After</span>
       </div>
       <div class="transform-body">
-        <div class="transform-name">XYZ, 28</div>
+        <div class="transform-name">Vikram S., 28</div>
         <div class="transform-goal">Fat Loss Program</div>
         <div class="transform-stat">Lost 18kg in 5 months · Still going strong</div>
       </div>
@@ -1437,7 +1451,7 @@ footer {
         <span class="transform-img-label a">After</span>
       </div>
       <div class="transform-body">
-        <div class="transform-name">XYZ, 24</div>
+        <div class="transform-name">Sahil M., 24</div>
         <div class="transform-goal">Muscle Building</div>
         <div class="transform-stat">Gained 6kg lean muscle in 4 months</div>
       </div>
@@ -1450,7 +1464,7 @@ footer {
         <span class="transform-img-label a">After</span>
       </div>
       <div class="transform-body">
-        <div class="transform-name">XYZ, 35</div>
+        <div class="transform-name">Nitin K., 35</div>
         <div class="transform-goal">Strength Building</div>
         <div class="transform-stat">Deadlift: 80kg → 140kg in 6 months</div>
       </div>
@@ -1759,6 +1773,38 @@ footer {
 
 <script>
 // ===== BODYBUILDER TIGER MASCOT =====
+(function() {
+  const tiger = document.getElementById('scroll-tiger');
+  if (!tiger) return;
+
+  let posX      = 5;     // vw
+  let faceRight = true;
+  let stopTimer = null;
+  let lastY     = window.scrollY;
+  const MAX_X   = 86;
+  const SPEED   = 20;
+
+  const roars = ['RAWR! 💪','BEAST MODE! 🔥','NO LIMITS! ⚡','GET GAINS! 🏋️','TRAIN HARD! 🐯','EAT. SLEEP. LIFT! 💥'];
+  let roarIdx = 0;
+
+  function applyFacing(right) {
+    faceRight = right;
+    // Use CSS custom property so idle animation respects direction
+    tiger.style.setProperty('--fx', right ? '1' : '-1');
+    tiger.style.transform = right ? 'scaleX(1)' : 'scaleX(-1)';
+  }
+
+  function startRun() {
+    tiger.classList.add('tiger-run');
+    tiger.classList.remove('tiger-idle');
+    clearTimeout(stopTimer);
+    stopTimer = setTimeout(stopRun, 260);
+  }
+
+  function stopRun() {
+    tiger.classList.remove('tiger-run');
+    tiger.classList.add('tiger-idle');
+  }
 
   // Click / tap: show roar bubble + jump animation
   tiger.addEventListener('click', () => {
@@ -2007,7 +2053,7 @@ const botReplies = {
   'free': 'Yes! We offer a free trial session for all new members. Fill the inquiry form in the Contact section and we\'ll set it up.',
   'contact': 'You can reach us:\n📍 Hazratganj, Lucknow\n📞 +91 98765 43210\n📧 info@thetigerfitness.in\n💬 WhatsApp button at bottom right!',
   'location': 'We\'re located in Hazratganj, Lucknow, UP 226001 — right in the heart of the city. 🗺️',
-  'trainer': 'Our elite coaches:\n🦁 Arjun Singh — Strength & Conditioning (8+ yrs)\n🐯 Priya Sharma — Fat Loss & Functional (6+ yrs)\n⚡ Rahul Verma — Athletic Performance (10+ yrs)\n\nAll NASM/ACE/CSCS certified!',
+  'trainer': 'Our elite coaches:\n🦁 Arjun Rawat — Strength & Conditioning (8+ yrs)\n🐯 Priya Sharma — Fat Loss & Functional (6+ yrs)\n⚡ Rahul Verma — Athletic Performance (10+ yrs)\n\nAll NASM/ACE/CSCS certified!',
   'coach': 'Tiger Fitness has 12+ expert coaches specializing in everything from powerlifting to women\'s fitness. Check the Trainers section!',
   'price': 'Plans start at ₹1,499/month. We also have quarterly and annual options with great savings. Visit the Membership section!',
   'cost': 'Memberships from ₹1,499/month. Worth every rupee! 🔥 See all plans in the Membership section.',
